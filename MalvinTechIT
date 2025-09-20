@@ -1,0 +1,277 @@
+import React, { useState } from "react";
+
+// Malvintech - Single-file React component (TailwindCSS)
+// Default export: <MalvintechApp />
+// Notes: This is a self-contained page component meant to be dropped into a React app
+// with Tailwind configured. Replace payment placeholders with your Stripe/PayPal integration.
+
+export default function MalvintechApp() {
+  const [plan, setPlan] = useState(null);
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  function openSubscribe(selectedPlan) {
+    setPlan(selectedPlan);
+    setMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function handleSubscribe(e) {
+    e.preventDefault();
+    // PAYMENT PLACEHOLDER
+    // Here you would call your backend to create a Stripe Checkout session
+    // or process payment with Stripe Elements / PayPal SDK. This demo simulates success.
+    if (!email) return alert("Please enter your email");
+    setTimeout(() => {
+      setSubscribed(true);
+    }, 700);
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-900 to-black text-slate-100 antialiased">
+      {/* NAV */}
+      <header className="max-w-6xl mx-auto p-6 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-md bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg">
+            <span className="font-bold text-lg text-slate-900">M</span>
+          </div>
+          <div>
+            <h1 className="font-extrabold text-xl tracking-tight">Malvintech</h1>
+            <div className="text-xs text-slate-400">Break Into IT — Learn • Build • Launch</div>
+          </div>
+        </div>
+
+        <nav className="hidden md:flex items-center gap-6 text-slate-300">
+          <a href="#home" className="hover:text-white">Home</a>
+          <a href="#fields" className="hover:text-white">Break Into IT</a>
+          <a href="#pricing" className="hover:text-white">Pricing</a>
+          <a href="#about" className="hover:text-white">About</a>
+          <a href="#contact" className="hover:text-white">Contact</a>
+          <button onClick={() => openSubscribe('monthly')} className="ml-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 px-4 py-2 rounded-md font-semibold">Subscribe</button>
+        </nav>
+
+        <div className="md:hidden">
+          <button onClick={() => setMenuOpen(!menuOpen)} className="p-2 rounded-md bg-slate-800">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      {menuOpen && (
+        <div className="md:hidden bg-slate-900/80 p-4">
+          <div className="flex flex-col gap-3 text-slate-300">
+            <a href="#home" onClick={() => setMenuOpen(false)}>Home</a>
+            <a href="#fields" onClick={() => setMenuOpen(false)}>Break Into IT</a>
+            <a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
+            <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+            <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+            <button onClick={() => openSubscribe('monthly')} className="mt-2 bg-cyan-500 text-slate-900 px-3 py-2 rounded-md font-semibold">Subscribe</button>
+          </div>
+        </div>
+      )}
+
+      {/* HERO */}
+      <section id="home" className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 className="text-5xl font-extrabold leading-tight">Break Into <span className="text-cyan-400">IT</span></h2>
+          <p className="mt-4 text-slate-300 max-w-xl">From zero experience to an expert in IT Support, Cybersecurity, NOC & SOC Careers. Structured roadmaps, hands-on labs, and career guidance to launch your tech career.</p>
+
+          <div className="mt-6 flex gap-3">
+            <button onClick={() => openSubscribe('monthly')} className="bg-cyan-500 hover:bg-cyan-400 text-slate-900 px-5 py-3 rounded-lg font-semibold shadow">Start Learning — Subscribe</button>
+            <a href="#fields" className="px-5 py-3 rounded-lg border border-slate-700 text-slate-300 hover:bg-slate-800">Explore Fields</a>
+          </div>
+
+          <div className="mt-8 grid grid-cols-3 gap-4 text-center text-slate-300">
+            <div>
+              <div className="text-2xl font-bold">200+</div>
+              <div className="text-xs text-slate-400">Hands-on labs</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold">4</div>
+              <div className="text-xs text-slate-400">Core Tracks</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold">Career</div>
+              <div className="text-xs text-slate-400">Roadmaps & Mentors</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center">
+          {/* Book cover — replace path if needed */}
+          <div className="w-72 md:w-96 bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-4 shadow-2xl">
+            <img src="/assets/ChatGPT Image Aug 31, 2025, 02_31_37 PM.png" alt="Break Into Tech" className="w-full rounded-md shadow" />
+          </div>
+        </div>
+      </section>
+
+      {/* Fields Section */}
+      <section id="fields" className="max-w-6xl mx-auto px-6 py-12">
+        <h3 className="text-3xl font-bold">Break Into IT — Learning Fields</h3>
+        <p className="mt-2 text-slate-400 max-w-2xl">Choose a track, follow the roadmap, and complete practical projects designed to get you interview-ready.</p>
+
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card title="IT Support Fundamentals" subtitle="Helpdesk to Systems Admin" features={["Hardware & OS","Troubleshooting","Ticketing & Soft Skills"]} onEnroll={() => openSubscribe('it-support')} />
+          <Card title="Cybersecurity Foundations" subtitle="Defensive & Offensive Basics" features={["Security Fundamentals","Threat Analysis","Intro to SIEM"]} onEnroll={() => openSubscribe('cybersecurity')} />
+          <Card title="Networking & NOC Operations" subtitle="Routing, Switching, Monitoring" features={["TCP/IP","Monitoring Tools","NOC Workflows"]} onEnroll={() => openSubscribe('noc')} />
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card title="SOC Careers" subtitle="From Analyst to SOC Lead" features={["SIEM","Incident Response","Playbooks & SOPs"]} onEnroll={() => openSubscribe('soc')} />
+          <Card title="Cloud & Servers" subtitle="AWS/Azure fundamentals" features={["Cloud Concepts","VMs & Storage","IaC Basics"]} onEnroll={() => openSubscribe('cloud')} />
+          <Card title="Career + Interview Prep" subtitle="Resumes, LinkedIn, Mock Interviews" features={["Resume Clinic","Mock Interviews","Career Roadmap"]} onEnroll={() => openSubscribe('career')} />
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section id="pricing" className="max-w-6xl mx-auto px-6 py-12">
+        <h3 className="text-3xl font-bold">Pricing</h3>
+        <p className="mt-2 text-slate-400">Simple plans. Cancel anytime. Secure payments.</p>
+
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <PriceCard name="Monthly" price="$29/mo" perks={["Full platform access","Monthly billing","Cancel anytime"]} onSelect={() => openSubscribe('monthly')} />
+          <PriceCard name="Annual" price="$199/yr" perks={["2 months free","Best value","Billed annually"]} highlight onSelect={() => openSubscribe('annual')} />
+          <PriceCard name="Lifetime" price="$399 once" perks={["One-time payment","Forever access","Priority support"]} onSelect={() => openSubscribe('lifetime')} />
+        </div>
+      </section>
+
+      {/* About */}
+      <section id="about" className="max-w-6xl mx-auto px-6 py-12">
+        <div className="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-3xl font-bold">About Malvintech</h3>
+            <p className="mt-4 text-slate-300">Malvintech exists to democratize access to practical IT education. Whether you are starting from zero or switching careers, our structured tracks, labs, and mentor-led guidance will move you from learning to earning faster.</p>
+            <ul className="mt-4 text-slate-400 list-disc ml-6">
+              <li>Practical, job-focused labs</li>
+              <li>Real-world projects and templates</li>
+              <li>Career-ready materials and interview coaching</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xl font-semibold">Our Promise</h4>
+            <p className="mt-2 text-slate-300">We prioritize clarity, hands-on experience, and industry alignment. Our content focuses on what employers actually look for.</p>
+
+            <div className="mt-4 grid grid-cols-2 gap-4">
+              <Stat label="Labs" value="200+" />
+              <Stat label="Tracks" value="6" />
+              <Stat label="Mentors" value="12" />
+              <Stat label="Resources" value="Templates & Guides" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="max-w-6xl mx-auto px-6 py-12">
+        <h3 className="text-2xl font-bold">Contact & Support</h3>
+        <p className="mt-2 text-slate-400">Questions? Partnerships? Email us or send a message below.</p>
+
+        <div className="mt-6 grid md:grid-cols-2 gap-6">
+          <div className="bg-slate-800 p-6 rounded-lg">
+            <p className="text-slate-300">Email</p>
+            <p className="font-semibold mt-1">hello@malvintech.com</p>
+
+            <p className="mt-4 text-slate-300">Office</p>
+            <p className="font-semibold mt-1">Remote • Worldwide</p>
+
+            <p className="mt-4 text-slate-300">Social</p>
+            <div className="mt-2 flex gap-3">
+              <a className="text-slate-400 hover:text-white">Twitter</a>
+              <a className="text-slate-400 hover:text-white">LinkedIn</a>
+              <a className="text-slate-400 hover:text-white">YouTube</a>
+            </div>
+          </div>
+
+          <form className="bg-slate-900 p-6 rounded-lg" onSubmit={(e) => { e.preventDefault(); alert('Message sent (demo)') }}>
+            <label className="text-slate-400 text-sm">Your email</label>
+            <input type="email" required className="mt-1 w-full bg-slate-800 px-3 py-2 rounded-md" />
+            <label className="text-slate-400 text-sm mt-4 block">Message</label>
+            <textarea required className="mt-1 w-full bg-slate-800 px-3 py-2 rounded-md h-28" />
+            <div className="mt-4 flex justify-end">
+              <button className="bg-cyan-500 px-4 py-2 rounded-md text-slate-900 font-semibold">Send</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-800 mt-12 py-8">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-slate-400">© {new Date().getFullYear()} Malvintech — Break Into IT</div>
+          <div className="text-slate-400">Terms • Privacy • Refund Policy</div>
+        </div>
+      </footer>
+
+      {/* Subscribe Modal / Section at top */}
+      <div className="fixed right-6 bottom-6 z-50">
+        <div className="bg-slate-800/90 backdrop-blur rounded-lg p-4 shadow-lg w-80">
+          {!subscribed ? (
+            <form onSubmit={handleSubscribe}>
+              <div className="text-sm text-slate-300">Subscribe — {plan ?? 'Choose a plan'}</div>
+              <input type="email" placeholder="you@email.com" value={email} onChange={(e)=> setEmail(e.target.value)} className="mt-3 w-full bg-slate-900 px-3 py-2 rounded-md" />
+              <div className="mt-3 flex gap-2">
+                <button type="submit" className="flex-1 bg-cyan-500 px-3 py-2 rounded-md text-slate-900 font-semibold">Checkout (Demo)</button>
+                <button type="button" onClick={() => { setPlan(null); setEmail(''); }} className="px-3 py-2 rounded-md border">Clear</button>
+              </div>
+              <div className="mt-2 text-xs text-slate-500">This demo does not process real payments. Integrate Stripe or PayPal in /api/checkout.</div>
+            </form>
+          ) : (
+            <div className="text-center">
+              <div className="text-green-400 font-semibold">Subscribed!</div>
+              <div className="text-slate-300 text-sm mt-2">Check your email for onboarding instructions (demo).</div>
+              <button onClick={() => setSubscribed(false)} className="mt-3 px-3 py-2 rounded-md border">Close</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+/* ---------- Small UI components used above ---------- */
+
+function Card({ title, subtitle, features, onEnroll }){
+  return (
+    <div className="bg-slate-900 rounded-xl p-6 shadow-lg">
+      <h4 className="text-xl font-semibold">{title}</h4>
+      <div className="text-sm text-slate-400 mt-1">{subtitle}</div>
+      <ul className="mt-4 text-slate-300 space-y-1">
+        {features.map((f, i) => <li key={i} className="text-sm">• {f}</li>)}
+      </ul>
+      <div className="mt-4 flex gap-2">
+        <button onClick={onEnroll} className="ml-auto bg-cyan-500 px-3 py-2 rounded-md text-slate-900 font-semibold">Enroll</button>
+      </div>
+    </div>
+  )
+}
+
+function PriceCard({ name, price, perks, onSelect, highlight }){
+  return (
+    <div className={`${highlight ? 'ring-2 ring-cyan-500' : ''} bg-slate-900 rounded-xl p-6 shadow-lg flex flex-col`}>
+      <div className="flex items-baseline gap-3">
+        <div className="text-2xl font-bold">{price}</div>
+        <div className="text-sm text-slate-400">{name}</div>
+      </div>
+      <ul className="mt-4 text-slate-300 flex-1">
+        {perks.map((p,i) => <li key={i} className="text-sm">• {p}</li>)}
+      </ul>
+      <div className="mt-4">
+        <button onClick={onSelect} className="w-full bg-cyan-500 px-3 py-2 rounded-md text-slate-900 font-semibold">Choose</button>
+      </div>
+    </div>
+  )
+}
+
+function Stat({ label, value }){
+  return (
+    <div className="bg-slate-800 rounded-md p-4">
+      <div className="text-slate-300 text-xs">{label}</div>
+      <div className="font-bold text-lg">{value}</div>
+    </div>
+  )
+}
